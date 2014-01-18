@@ -13,3 +13,11 @@
 
  *= require_tree .
  */
+
+footer {
+	bottom: 0;
+	position: fixed;
+	width: 100%;
+	padding-right: 13%;
+	text-align: right;
+}

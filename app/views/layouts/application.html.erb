@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "Todo List" %></title>
 
     <%= stylesheet_link_tag    "application" %>
     <%= javascript_include_tag "vendor/modernizr" %>
@@ -12,11 +12,42 @@
   </head>
 
   <body>
+     <nav class="top-bar" data-topbar>
+      <ul class="title-area">
+        <!-- Title Area -->
+        <li class="name">
+          <h1>
+            <a href="/">
+              Todo List
+            </a>
+          </h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+      </ul>
+   
+      <section class="top-bar-section">
+        <!-- Right Nav Section -->
+        <ul class="right">
+          <li class="divider"></li>
+          <li><a href="/tasks">Tasks</a></li>
+          <li class="divider"></li>
+          <li><a href="/help">Help</a></li>
+        </ul>
+      </section>
+    </nav>
+    <div class="row">
+      <div class="large-12 columns">
 
-    <%= yield %>
-    <footer>
-      Kenley Tan 2013
-    </footer>
+   
+        <%= yield %>
+        <footer>
+            <hr>
+                      <p>&copy; Kenley Earl Tan 2013</p>
+                
+            
+          </footer>
+        </div>
+      </div>
 
     <%= javascript_include_tag "application" %>
   </body>
