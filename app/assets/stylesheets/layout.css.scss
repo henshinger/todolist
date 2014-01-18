@@ -1,6 +1,7 @@
-$footer-height: 5em; 
+$footer-height: 3em; 
 html, body { height: 100%; }
 #wrap {
+    padding-top: 10px;
     min-height: 100%;
     height: auto !important;
     height: 100%;

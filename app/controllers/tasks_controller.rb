@@ -25,14 +25,14 @@ class TasksController < ApplicationController
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
-
+    @task.is_completed = false;
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @task }
+        #format.json { render action: 'show', status: :created, location: @task }
       else
         format.html { render action: 'new' }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        #format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -53,13 +53,13 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1
   # DELETE /tasks/1.json
-  def destroy
-    @task.destroy
-    respond_to do |format|
-      format.html { redirect_to tasks_url }
-      format.json { head :no_content }
-    end
-  end
+  # def destroy
+  #   @task.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to tasks_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -69,6 +69,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:name, :category, :due_date, :is_completed)
+      params.require(:task).permit(:name, :category, :due_date)
     end
 end
