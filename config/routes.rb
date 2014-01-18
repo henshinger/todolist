@@ -1,4 +1,6 @@
 Todolist::Application.routes.draw do
+  resources :tasks
+
   get "navigation/home"
   get "navigation/help"
   # The priority is based upon order of creation: first created -> highest priority.
