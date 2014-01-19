@@ -53,9 +53,9 @@ class TasksController < ApplicationController
 
   def complete
     if Task.where(id: params[:task_ids]).update_all(is_completed: true) 
-      render :completed
+      redirect_to completed_tasks_path  
     else
-      render :index
+      redirect_to tasks_path
     end
   end
 
