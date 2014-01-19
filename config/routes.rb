@@ -1,6 +1,7 @@
 Todolist::Application.routes.draw do
   resources :tasks do
     collection do
+      get 'completed'
       patch 'complete'
     end
   end

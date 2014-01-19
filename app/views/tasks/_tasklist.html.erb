@@ -1,0 +1,9 @@
+<% @tasks.each do |task| %>
+      <div class="row">
+        <div class="large-12 columns">
+          <%= check_box_tag("task_ids[]", task.id, task.is_completed) %>
+          <%= label_tag("task_ids[]", task.name) %>
+           <%= link_to 'Show', task %>  |  <%= link_to 'Edit', edit_task_path(task) %>
+        </div>
+      </div>
+    <% end %>
