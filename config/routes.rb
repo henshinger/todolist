@@ -2,6 +2,7 @@ Todolist::Application.routes.draw do
   resources :tasks do
     collection do
       get 'completed'
+      get 'today'
       patch 'complete'
     end
   end

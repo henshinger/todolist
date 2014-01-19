@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.where(is_completed: false)
+    @tasks = Task.where(is_completed: false).order(due_date: :asc, name: :asc)
   end
 
   # GET /tasks/1
@@ -60,7 +60,7 @@ class TasksController < ApplicationController
   end
 
   def completed
-    @tasks = Task.where(is_completed: true)
+    @tasks = Task.where(is_completed: true).order(due_date: :asc, name: :asc)
   end
   # DELETE /tasks/1
   # DELETE /tasks/1.json
@@ -71,6 +71,10 @@ class TasksController < ApplicationController
   #     format.json { head :no_content }
   #   end
   # end
+
+  def today 
+    @tasks = Task.where(due_date: Date.today).order(name: :asc)
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
