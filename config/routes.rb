@@ -1,5 +1,9 @@
 Todolist::Application.routes.draw do
-  resources :tasks
+  resources :tasks do
+    collection do
+      patch 'complete'
+    end
+  end
 
   root "navigation#home"
   get 'help' => "navigation#help"

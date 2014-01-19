@@ -51,6 +51,17 @@ class TasksController < ApplicationController
     end
   end
 
+  def complete
+    if Task.where(id: params[:task_ids]).update_all(is_completed: true) 
+      render :completed
+    else
+      render :index
+    end
+  end
+
+  def completed
+    @tasks = Task.where(is_completed: true)
+  end
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   # def destroy
