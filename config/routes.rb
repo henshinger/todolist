@@ -3,6 +3,7 @@ Todolist::Application.routes.draw do
     collection do
       get 'completed'
       get 'today'
+      get 'search'
       patch 'complete'
     end
   end

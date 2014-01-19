@@ -7,6 +7,9 @@ class TasksController < ApplicationController
     @tasks = Task.where(is_completed: false).order(due_date: :asc, name: :asc)
   end
 
+  def search
+    @tasks = Task.where(["name LIKE ?", "%#{params[:search]}%"])
+  end
   # GET /tasks/1
   # GET /tasks/1.json
   def show

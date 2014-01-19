@@ -1,0 +1,6 @@
+<h1>Search Results</h1>
+<% if @tasks.count > 0 %>
+	<%= render partial: 'tasklist', locals: {tasks: @tasks} %>
+<% else %>
+	Bad news: We found nothing. Good news: That's one less thing to do.
+<% end %>
