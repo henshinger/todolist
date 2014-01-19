@@ -1,0 +1,42 @@
+<h1><%= title %></h1>
+<div class="row">
+  <div class="large-8 columns">
+    <dl class="sub-nav">
+      <dt>Filter:</dt>
+      <dd class="<%= 'active' if current_page?(tasks_path) %>"><%= link_to 'Pending Tasks', tasks_path%></dd>
+      <dd class="<%= 'active' if current_page?(completed_tasks_path) %>"><%= link_to 'Completed Tasks', completed_tasks_path%></dd>
+      <dd class="<%= 'active' if current_page?(today_tasks_path) %>"><%= link_to 'Today\'s Tasks', today_tasks_path%></dd>
+      <% if current_page?(search_tasks_path) %>
+        <dd class="active"><a href="#">Search Results</a></dd>
+      <% end %>
+    </dl>
+    <%= form_tag incomplete ? complete_tasks_path : unmark_tasks_path , method: :patch do %>
+      <% if @tasks.count > 0 %>
+        <%= render partial: 'tasklist', locals: {tasks: @tasks} %>
+        <% if incomplete %>
+          <%= submit_tag "Mark as Complete", class: "button small success radius" %>        
+        <% else %>
+          <%= submit_tag "Mark as Incomplete", class: "button small success radius" %>        
+        <% end %>
+      <% else %>
+        Bad news: We found nothing. Good news: You don't have to do anything.
+      <% end %>
+      
+    <% end %>
+  </div>
+  <div class="large-4 columns">
+    <%= link_to 'New Task', new_task_path, class: "button raidus max-width" %>
+    <%= form_tag search_tasks_path, method: :get do %>
+      <div class="row collapse">
+        <div class="small-9 columns">          
+          <%= text_field_tag :search, nil, placeholder: "Type in the keywords" %>
+        </div>
+        <div class="small-3 columns">          
+          <%= submit_tag "Search", class: "button postfix" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+

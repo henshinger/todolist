@@ -62,6 +62,14 @@ class TasksController < ApplicationController
     end
   end
 
+  def unmark
+    if Task.where.not(id: params[:task_ids]).update_all(is_completed: false) 
+      redirect_to tasks_path  
+    else
+      redirect_to completed_tasks_path
+    end
+  end
+
   def completed
     @tasks = Task.where(is_completed: true).order(due_date: :asc, name: :asc)
   end

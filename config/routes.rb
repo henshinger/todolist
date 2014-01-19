@@ -4,6 +4,7 @@ Todolist::Application.routes.draw do
       get 'completed'
       get 'today'
       get 'search'
+      patch 'unmark'
       patch 'complete'
     end
   end
