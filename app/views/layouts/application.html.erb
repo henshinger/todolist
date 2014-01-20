@@ -50,17 +50,12 @@
   <section id="wrap" role="document">
     <div class="row">
       <div class="large-12 columns">
-        <% if flash[:error] %>
-          <%= content_tag :div, :id => "flash_name", :class => "alert-box error" do %>
-            <%= flash[:error] %>
-            <a class="close">x</a>
-          <% end %>
-        <% end %>
-
-        <% if flash[:notice] %>
-          <%= content_tag :div, :id => "flash_name", :class => "alert-box success" do %>
-            <%= flash[:notice] %>
-            <a class="close">x</a>
+        <% flash.each do |name, msg| %>
+          <% if msg.is_a?(String) %>
+            <div data-alert class="alert-box radius <%= name == :notice ? "success" : "alert" %>">
+              <%= content_tag :div, msg %>
+              <a href="#" class="close">&times;</a>
+            </div>
           <% end %>
         <% end %>
         <%= yield %>
