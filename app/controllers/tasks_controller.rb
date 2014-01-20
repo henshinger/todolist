@@ -4,11 +4,11 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.where(is_completed: false).order(due_date: :asc, name: :asc)
+    @tasks = task_model.incomplete.order(due_date: :asc, name: :asc)
   end
 
   def search
-    @tasks = Task.where(["name LIKE ?", "%#{params[:search]}%"])
+    @tasks = task_model.search_name(params[:search])
   end
   # GET /tasks/1
   # GET /tasks/1.json
@@ -29,6 +29,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.is_completed = false;
+    @task.user_id = current_user.id
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
@@ -55,7 +56,7 @@ class TasksController < ApplicationController
   end
 
   def complete
-    if Task.where(id: params[:task_ids]).update_all(is_completed: true) 
+    if Task.ids(params[:task_ids]).update_all(is_completed: true) 
       redirect_to completed_tasks_path  
     else
       redirect_to tasks_path
@@ -71,7 +72,7 @@ class TasksController < ApplicationController
   end
 
   def completed
-    @tasks = Task.where(is_completed: true).order(due_date: :asc, name: :asc)
+    @tasks = task_model.completed.order(due_date: :asc, name: :asc)
   end
   # DELETE /tasks/1
   # DELETE /tasks/1.json
@@ -84,7 +85,7 @@ class TasksController < ApplicationController
   # end
 
   def today 
-    @tasks = Task.where(due_date: Date.today).order(name: :asc)
+    @tasks = task_model.due_today.order(name: :asc)
   end
 
   private
@@ -96,5 +97,9 @@ class TasksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
       params.require(:task).permit(:name, :category, :due_date)
+    end
+
+    def task_model      
+      Task.owner(current_user)
     end
 end
