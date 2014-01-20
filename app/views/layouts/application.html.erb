@@ -32,6 +32,17 @@
           <li><a href="/tasks">Tasks</a></li>
           <li class="divider"></li>
           <li><a href="/help">Help</a></li>
+          <li class="divider"></li>
+          <% if current_user %>
+            <li><a href=""><%= current_user.email %></a></li>
+            <li class="divider"></li>
+            <li><%= link_to "Log Out", logout_path %></li>
+          <% else %>
+            <li><%= link_to "Sign Up", signup_path %></li>
+            <li class="divider"></li>
+            <li><%= link_to "Log In", login_path %></li>
+          <% end %>
+          <li class="divider"></li>
         </ul>
       </section>
     </nav>
@@ -39,6 +50,19 @@
   <section id="wrap" role="document">
     <div class="row">
       <div class="large-12 columns">
+        <% if flash[:error] %>
+          <%= content_tag :div, :id => "flash_name", :class => "alert-box error" do %>
+            <%= flash[:error] %>
+            <a class="close">x</a>
+          <% end %>
+        <% end %>
+
+        <% if flash[:notice] %>
+          <%= content_tag :div, :id => "flash_name", :class => "alert-box success" do %>
+            <%= flash[:notice] %>
+            <a class="close">x</a>
+          <% end %>
+        <% end %>
         <%= yield %>
       </div>
     </div>

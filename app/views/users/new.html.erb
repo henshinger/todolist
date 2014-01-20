@@ -3,7 +3,7 @@
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation" data-alert data-options="animation_speed:500;" class="alert-box warning radius">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this task from being saved:</h2>
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited you from signing up:</h2>
 
       <ul>
       <% @user.errors.full_messages.each do |msg| %>
@@ -22,7 +22,7 @@
         </div>
         <div class="large-9 columns">
           <!-- <input type="text" id="right-label" placeholder="Inline Text Input"> -->
-          <%= f.text_field :email, placeholder: "Email" %>
+          <%= f.text_field :email%>
         </div>
       </div>
     </div>
