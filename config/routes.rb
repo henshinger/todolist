@@ -1,4 +1,7 @@
 Todolist::Application.routes.draw do
+  get "sessions/new"
+  resources :users
+
   resources :tasks do
     collection do
       get 'completed'
