@@ -1,4 +1,5 @@
 class Task < ActiveRecord::Base
+  belongs_to :users
 	scope :completed, -> { where is_completed: true }
 	scope :incomplete, -> { where is_completed: false }
 	scope :search_name, ->(name) { where ["name LIKE ?", "%#{name}%"] }

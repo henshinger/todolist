@@ -31,7 +31,7 @@
       </div>
     <% end %>
     <%= form_tag incomplete ? complete_tasks_path : unmark_tasks_path , method: :patch do %>
-      <% if @tasks.count > 0 %>
+      <% if @tasks.count > 0 && current_user%>
         <%= render partial: 'tasklist', locals: {tasks: @tasks} %>
         <% if incomplete %>
           <%= submit_tag "Mark as Complete", class: "button small success radius" %>        

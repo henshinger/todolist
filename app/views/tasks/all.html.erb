@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="large-9 columns">
+    <%= form_tag complete_tasks_path, method: :patch do %>
+      <% if @tasks.count > 0 %>
+        <%= render partial: 'tasklist', locals: {tasks: @tasks} %>
+        <% if current_user %>
+          <%= submit_tag "Mark as Complete", class: "button small success radius" %>               
+        <% end %>
+      <% else %>
+        Bad news: We found nothing. Good news: You don't have to do anything.
+      <% end %>
+      
+    <% end %>
+  </div>
+</div>

@@ -1,8 +1,11 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-
+  before_action :authorize, except: [:all]
   # GET /tasks
   # GET /tasks.json
+  def all
+    @tasks = Task.all.order(due_date: :asc, name: :asc)
+  end
   def index
     @tasks = task_model.incomplete.order(due_date: :asc, name: :asc)
   end
@@ -17,7 +20,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @task = Task.new
+    @task = current_user.tasks.build
   end
 
   # GET /tasks/1/edit
@@ -27,9 +30,9 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = current_user.task.build
     @task.is_completed = false;
-    @task.user_id = current_user.id
+    
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
@@ -39,36 +42,37 @@ class TasksController < ApplicationController
         #format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @task.update(task_params)
+          format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: 'edit' }
+          format.json { render json: @task.errors, status: :unprocessable_entity }
+        end
       end
-    end
   end
 
   def complete
-    if Task.ids(params[:task_ids]).update_all(is_completed: true) 
-      redirect_to completed_tasks_path  
-    else
-      redirect_to tasks_path
-    end
+      if Task.ids(params[:task_ids]).update_all(is_completed: true) 
+        redirect_to completed_tasks_path  
+      else
+        redirect_to tasks_path
+      end
   end
 
   def unmark
-    if Task.where.not(id: params[:task_ids]).update_all(is_completed: false) 
-      redirect_to tasks_path  
-    else
-      redirect_to completed_tasks_path
-    end
+      if Task.where.not(id: params[:task_ids]).update_all(is_completed: false) 
+        redirect_to tasks_path  
+      else
+        redirect_to completed_tasks_path
+      end
   end
 
   def completed
