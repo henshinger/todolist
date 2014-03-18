@@ -16,6 +16,8 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    @comments = @task.comments
+    @comment = @task.comments.build
   end
 
   # GET /tasks/new
@@ -30,7 +32,7 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = current_user.task.build
+    @task = current_user.task.build(task_params)
     @task.is_completed = false;
     
     respond_to do |format|
