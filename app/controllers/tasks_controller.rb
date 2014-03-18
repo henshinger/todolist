@@ -32,7 +32,7 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = current_user.task.build(task_params)
+    @task = current_user.tasks.build(task_params)
     @task.is_completed = false;
     
     respond_to do |format|
